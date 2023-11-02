@@ -1,0 +1,69 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id  String  @id @default(uuid())
+  email String @unique
+  password String
+  first_name String
+  last_name String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  Categories Category[]
+  Accounts Account[]
+}
+
+model Category {
+  id String @id @default(uuid())
+  user_id String
+  name String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  user User @relation(fields: [user_id],references: [id])
+
+  balance Balance[]
+}
+
+model Account {
+  id String @id @default(uuid())
+  user_id String
+  name String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  user User @relation(fields: [user_id],references: [id])
+
+  balance Balance[]
+}
+
+model Balance {
+  id String @id @default(uuid())
+  account_id String
+  category_id String
+  operation Operation 
+  value Float 
+  date  DateTime
+  description String
+  paidOut Boolean
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  account Account @relation(fields: [account_id],references: [id])
+  category Category @relation(fields: [category_id],references: [id])
+}
+
+enum Operation {
+  REVENUE
+  EXPENSE
+  DEBT
+}
