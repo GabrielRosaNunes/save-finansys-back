@@ -33,7 +33,7 @@ model Category {
 
   user User @relation(fields: [user_id],references: [id])
 
-  balance Balance[]
+  ledger Ledger[]
 }
 
 model Account {
@@ -44,10 +44,10 @@ model Account {
   updated_at DateTime @updatedAt
   user User @relation(fields: [user_id],references: [id])
 
-  balance Balance[]
+  ledger Ledger[]
 }
 
-model Balance {
+model Ledger {
   id String @id @default(uuid())
   account_id String
   category_id String
@@ -55,7 +55,7 @@ model Balance {
   value Float 
   date  DateTime
   description String
-  paidOut Boolean
+  paid Boolean
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   account Account @relation(fields: [account_id],references: [id])
