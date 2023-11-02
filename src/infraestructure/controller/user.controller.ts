@@ -3,6 +3,7 @@ import { UserDto } from "src/domain/aggregate/user.aggregate";
 import { UserService } from "src/domain/service/user.service";
 import { User } from "src/domain/entity/user.entity";
 import { Category } from "src/domain/entity/category.entity";
+import { Account } from "src/domain/entity/account.entity";
 
 @Controller('user')
 export class UserController {
@@ -14,11 +15,12 @@ export class UserController {
 
     @Get(':id/categories')
     async getUserCategories(@Param('id') userId: string): Promise<Category[]> {
-        try {
-            return this.userService.getUserCategories(userId)
-        } catch(error) {
-            throw new HttpException(error,HttpStatus.INTERNAL_SERVER_ERROR)
-        }
+        return await this.userService.getUserCategories(userId)
+    }
+
+    @Get(':id/accounts')
+    async getUserAccounts(@Param('id') userId: string): Promise<Account[]> {
+        return await this.userService.getUserAccounts(userId)
     }
 
     @Post()

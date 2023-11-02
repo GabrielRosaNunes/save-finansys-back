@@ -1,12 +1,12 @@
 import { Module } from "@nestjs/common/decorators";
 import { UserController } from "./user.controller";
-import { RepositoriesModule } from "../repositories/repositories.module";
 import { DomainModule } from "src/domain/domain.module";
 import { CategoryController } from "./category.controller";
+import { AccountController } from "./account.controller";
 
 @Module({
     imports: [DomainModule],
-    controllers:[UserController,CategoryController],
+    controllers:[UserController,CategoryController,AccountController],
 })
 export class ControllerModule {
 
